@@ -2,21 +2,21 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  
+  # Imagen base de Debian Bookworm
   config.vm.box = "debian/bookworm64"
 
-  # Configuración común
+  # Configuración común: actualizar e instalar paquetes de DNS
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y bind9 dnsutils
   SHELL
 
-  # Máquina DNSA (Master)
+  # Máquina DNSA (Maestro)
   config.vm.define "dnsa" do |dnsa|
-    # host
+    # Nombre de host
     dnsa.vm.hostname = "dnsa"
     
-    # Red privada 
+    # Red privada con IP estática
     dnsa.vm.network "private_network", ip: "192.168.57.10"
 
     # Configurar para que si después de cierto tiempo no se inicializa, detenerlo
@@ -31,6 +31,12 @@ Vagrant.configure("2") do |config|
       dnsa.vm.provision "shell", inline: <<-SHELL
       sudo cp -v /vagrant/files/MASTER.ies.test.dns /etc/bind/MASTER.ies.test.dns
       sudo cp -v /vagrant/files/MASTERnamed.conf.local /etc/bind/named.conf.local
+      sudo mkdir -p /etc/bind/zones
+      sudo cp -v /vagrant/files/db.192.168.57 /etc/bind/zones/db.192.168.57
+      sudo cp -v /vagrant/files/db.informatica.ies.test /etc/bind/zones/db.informatica.ies.test
+      sudo cp -v /vagrant/files/db.aulas.ies.test /etc/bind/zones/db.aulas.ies.test
+      sudo cp -v /vagrant/files/db.departamentos.ies.test /etc/bind/zones/db.departamentos.ies.test
+      sudo systemctl restart bind9
     SHELL
   end
 
