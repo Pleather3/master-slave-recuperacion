@@ -1,0 +1,30 @@
+zone "ies.test" {
+    type master;
+    file "/etc/bind/MASTER.ies.test.dns";
+    allow-transfer { 192.168.57.11; };  # IP del servidor esclavo si es necesario
+};
+zone "57.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/zones/db.192.168.57"; 
+};
+zone "informatica.ies.test" {
+    type master;
+    file "/etc/bind/zones/db.informatica.ies.test";
+};
+zone "db.aulas.ies.test" {
+    type master;
+    file "/etc/bind/zones/db.aulas.ies.test";
+};
+zone "departamentos.ies.test" {
+    type master;
+    file "/etc/bind/zones/db.departamentos.ies.test";
+};
+logging {
+    channel default_log {
+        file "/var/log/named/default.log";
+        severity info;
+        print-time yes;
+    };
+
+    category queries { default_log; };
+};

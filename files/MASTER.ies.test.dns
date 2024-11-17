@@ -1,0 +1,15 @@
+$TTL 86400
+@   IN  SOA     dnsa.ies.test. root.ies.test. (
+                2024102401 ; Serial
+                7200       ; Refresh
+                3600       ; Retry
+                1209600    ; Expire
+                7200       ; Negative Cache TTL
+)
+
+; Registros NS
+@   IN  NS      dnsa.ies.test.
+
+; Registros A
+@   IN  A       192.168.57.10  ; IP del servidor maestro
+dnsa IN  A      192.168.57.10  

@@ -1,0 +1,26 @@
+zone "ies.test" {
+    type slave;
+    file "/var/lib/bind/SLAVE.ies.test.dns";
+    masters { 192.168.57.10; };  # IP del servidor maestro
+};
+
+zone "57.168.192.in-addr.arpa" {
+	type slave;
+	file "/etc/bind/zones/db.192.168.57";
+	masters { 192.168.57.10; };
+};
+zone "informatica.ies.test" {
+    type slave;
+    file "/etc/bind/zones/db.informatica.ies.test"; 
+    masters { 192.168.57.10; };  # IP del servidor maestro
+};
+zone "db.aulas.ies.test" {
+    type slave;
+    file "/etc/bind/zones/db.aulas.ies.test"; 
+    masters { 192.168.57.10; };  # IP del servidor maestro
+};
+zone "departamentos.ies.test" {
+    type slave;
+    file "/etc/bind/zones/db.departamentos.ies.test";
+    masters { 192.168.57.10; };  # IP del servidor maestro
+};
